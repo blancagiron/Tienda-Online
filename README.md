@@ -2,13 +2,23 @@
 
 ## 📝 Overview  
 
-This project is a full-stack e-commerce web application that combines both frontend and backend technologies. It serves as the final project for subject Desarrollo de Aplicaciones para Internet, integrating all the concepts and tools learned throughout the semester. The application features a user-friendly interface, a robust backend, and seamless integration with a MongoDB database.  
+This project is a full-stack e-commerce web application that combines both frontend and backend technologies. It serves as the final project for subject Desarrollo de Aplicaciones para Internet, integrating all the concepts and tools learned throughout the semester. The application features a user-friendly interface, a robust backend, and seamless integration with a MongoDB database. While I know there are a lot to things to improve and some errors to fix, it represents my first experience with React and combining frontend with backend in a production-like environment !
+
+### 🎓 What I Learned
+
+During this project, I gained experience in:
+- ✅ Building a REST API with Express.js
+- ✅ Managing a NoSQL database using MongoDB & Mongoose
+- ✅ User authentication & security with JWT and bcrypt
+- ✅ Styling with Bootstrap for a modern UI
+- ✅ Containerization with Docker & Docker Compose
+- ✅ Handling environment variables in a production setup
 
 ### ✨ Key Features:  
 - **Frontend**: Built with **React**, **Vite**, and **Bootstrap** for a responsive and modern user interface.  
 - **Backend**: Powered by **Node.js** with **Nunjucks** for server-side templating.  
 - **Database**: Uses **MongoDB** for data storage, with **Mongo Express** for database management.  
-- **APIs**: RESTful APIs for handling product data, user authentication, and order management.  
+- **APIs**: RESTful APIs for handling product data, user authentication, and product ratings.  
 - **Deployment**: Currently working on deploying the application using **Vercel**.  
 
 ---
