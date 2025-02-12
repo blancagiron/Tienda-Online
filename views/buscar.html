@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="jumbotron-custom-base">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/tienda/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{query}}</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">Resultados de: {{query}}</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {% if productos_buscados.length > 0 %}
+                {% for producto in productos_buscados %}
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card h-100">
+                        <div class = "card-img-wrapper">
+                            <img src="{{ producto.image }}" class="card-img-top img-fluid" alt="imagen del producto" style="height: 350px; object-fit: auto;">
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between text-center">
+                            <h5 class="card-title">{{ producto.title }}</h5>
+                            <a href="/tienda/detalle_producto/{{ producto.id }}" class="btn-ver-producto mt-auto">Ver producto</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="container container-custom text-center">
+                    <p class="text-muted">No se encontraron productos para la búsqueda "{{ query }}".</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

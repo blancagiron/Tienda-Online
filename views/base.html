@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar-custom {
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+            padding: 1rem 0;
+        }
+
+        .brand-section {
+            margin-right: 2.5rem;
+        }
+
+        .store-icon {
+            color: #FF6B6B;
+            margin-right: 0.75rem;
+        }
+
+        .nav-section {
+            margin-right: auto;
+            padding-left: 1rem;
+        }
+
+        .search-section {
+            margin-right: 2rem;
+        }
+
+        .cart-section {
+            margin-left: 1rem;
+            padding: 0.5rem;
+        }
+
+        .category-item:hover {
+            background-color: #f1f1f1;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .nav-link:hover {
+            color: #FF6B6B !important;
+        }
+
+        .search-box {
+            min-width: 300px;
+        }
+
+        .search-btn {
+            background-color: #FF6B6B;
+            border-color: #FF6B6B;
+            color: white;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-btn:hover {
+            background-color: #ff5252;
+            border-color: #ff5252;
+            color: white;
+        }
+
+        .cart-badge {
+            background-color: #FF6B6B;
+
+        }
+
+        .dropdown-menu {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, .1);
+            padding: 0.5rem 0;
+            min-width: 200px;
+        }
+
+        .dropdown-item {
+            padding: 0.7rem 1.5rem;
+        }
+
+        .navbar-brand {
+            font-size: 1.4rem;
+        }
+
+        .jumbotron {
+            background-color: #f8f9fa;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .product-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            padding-top: 75%;
+            /* 4:3 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .card-img-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .btn-ver-producto {
+            background-color: #FF6B6B;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-ver-producto:hover {
+            background-color: #ff5252;
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .card-img-wrapper {
+                padding-top: 100%;
+                /* 1:1 Aspect Ratio for mobile */
+            }
+
+            .jumbotron {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .search-section {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .nav-section {
+                margin: 0.5rem 0;
+            }
+
+            .cart-section {
+                margin: 0.5rem 0;
+            }
+        }
+
+        .product-detail-container {
+            padding: 2rem 0;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb-item a {
+            color: #FF6B6B;
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: #6c757d;
+        }
+
+        .product-image-container {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            display: block;
+        }
+
+        footer a {
+            color: #FF6B6B;
+        }
+
+        .product-info {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            height: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .star {
+            font-size: 24px;
+            cursor: pointer;
+            margin: 0 2px;
+            transition: color 0.3s ease;
+            /* Animación para un cambio de color suave */
+        }
+
+        .star.full {
+            color: gold;
+            /* Estrellas completas */
+        }
+
+        .star.half {
+            color: gold;
+            /* Estrellas medias */
+        }
+
+        .star.empty {
+            color: gray;
+            /* Estrellas vacías */
+        }
+
+        .star:hover,
+        .star:hover~.star {
+            color: lightblue;
+            /* Cambia de color al pasar el mouse */
+        }
+
+        .rating-number {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color:#555
+        }
+
+        .rating-count {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .rating-container {
+            margin-bottom: 1.5rem;
+        }
+
+        /*
+        .stars {
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 1.25rem;
+        }
+
+        .star.filled {
+            color: #ffd700;
+        }
+
+        .star.half-filled {
+            background: linear-gradient(90deg, gold 50%, #ddd 50%);
+        }
+
+        .rating-count {
+            color: #6c757d;
+            font-size: 0.9rem;
+        } */
+
+        .price-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #FF6B6B;
+        }
+
+        .description-container {
+            margin-bottom: 2rem;
+        }
+
+        .description-container h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .description-container p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .add-to-cart-form {
+            margin-top: auto;
+        }
+
+        .btn-add-to-cart {
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.25rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #ff5252;
+        }
+
+        @media (max-width: 768px) {
+            .product-info {
+                padding: 1.5rem;
+            }
+
+            .product-title {
+                font-size: 1.5rem;
+            }
+
+            .price {
+                font-size: 1.75rem;
+            }
+
+            .product-image {
+                height: 300px;
+            }
+        }
+
+        .jumbotron-custom-base {
+            background-color: #f8f9fa;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0;
+        }
+
+        .cart-container {
+            padding: 2rem 0;
+        }
+
+        .cart-items {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .cart-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .item-details {
+            padding: 0 1rem;
+        }
+
+        .item-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-label {
+            color: #6c757d;
+        }
+
+        .price-amount {
+            font-weight: 600;
+            color: #FF6B6B;
+        }
+
+        .btn-remove {
+            background-color: transparent;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .cart-summary {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .summary-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .summary-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            color: #6c757d;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+            border-top: 1px solid #eee;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+
+        .btn-checkout {
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-checkout:hover {
+            background-color: #ff5252;
+        }
+
+        .empty-cart {
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .empty-cart-content {
+            max-width: 400px;
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart p {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-continue-shopping {
+            background-color: #FF6B6B;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        /* ratings.css */
+        .stars {
+            color: #FFD700;
+            /* Gold color for stars */
+            font-size: 1.2rem;
+        }
+
+        .star.full {
+            color: #FFD700;
+        }
+
+        .star.half {
+            color: #FFD700;
+            position: relative;
+        }
+
+        .star.half::after {
+            content: '½';
+            position: absolute;
+            left: 0;
+            width: 50%;
+            overflow: hidden;
+            color: #FFD700;
+        }
+
+        .star.empty {
+            color: #ddd;
+        }
+
+
+
+        .btn-continue-shopping:hover {
+            background-color: #ff5252;
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .item-details {
+                padding: 1rem 0;
+            }
+
+            .cart-item {
+                padding: 1rem;
+            }
+
+            .item-actions {
+                display: flex;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+
+            .cart-summary {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+    <script src="/tienda/static/js/ratings.js"></script>
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Menú de navegación -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+            <div class="container">
+                <!-- Brand Section -->
+                <div class="brand-section">
+                    <a class="navbar-brand d-flex align-items-center" href="/tienda/">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-shop store-icon" viewBox="0 0 16 16">
+                            <path
+                                d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z" />
+                        </svg>
+                        <span class="font-weight-bold">Mi Tienda</span>
+                    </a>
+                </div>
+
+
+                {% if usuario %}
+                <a href="/tienda/logout" class="btn btn-link text-dark">Cerrar sesión {{usuario}}</a>
+                {% else %}
+                <a href="/tienda/login" class="btn btn-link text-dark">Iniciar sesión</a>
+                {% endif %}
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Navigation Section -->
+                    <div class="nav-section">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        class="bi bi-grid mr-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z" />
+                                    </svg>
+                                    Categorías
+                                </a>
+                                <div class="dropdown-menu border-0" aria-labelledby="navbarDropdown">
+                                    {% for category in categorias %}
+                                    <a class="dropdown-item category-item" href="/tienda/category/{{ category }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-tag mr-2" viewBox="0 0 16 16">
+                                            <path
+                                                d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z" />
+                                            <path
+                                                d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2z" />
+                                        </svg>
+                                        {{ category }}
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Search Section -->
+                    <div class="search-section">
+                        <form class="form-inline m-0" method="GET" action="/tienda/buscar">
+                            <div class="input-group search-box">
+                                <input class="form-control border-right-0" type="search" placeholder="Buscar productos"
+                                    aria-label="Buscar" name="query">
+
+                                <button class="btn search-btn" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Cart Section -->
+                    <!-- Cart Section -->
+                    <div class="cart-section">
+                        <div class="position-relative">
+                            <span class="badge badge-pill cart-badge position-absolute" style="top: -8px; right: -8px;">
+                                {{ cantidad_carrito }}
+                            </span>
+                            <!-- Hacemos que el enlace sea 'disabled' si el carrito está vacío -->
+                            <a href="/tienda/carrito" class="text-dark {{ 'disabled' if cantidad_carrito == 0 else '' }}" {% if
+                                cantidad_carrito==0 %} aria-disabled="true" tabindex="-1" style="pointer-events: none;"
+                                {% endif %}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                                    class="bi bi-cart3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Resto del contenido igual -->
+    <main class="flex-grow-1 py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer igual -->
+    <footer class="bg-light mt-auto py-4">
+        <!-- ... contenido del footer ... -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-dark font-weight-bold mb-3">Contacto</h5>
+                    <p class="mb-1">Email: contacto@mitienda.com</p>
+                    <p class="mb-1">Teléfono: +34 123 456 789</p>
+                    <p class="mb-0">Alumna: Blanca Girón Ricoy</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-dark font-weight-bold mb-3">Redes sociales</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-dark mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                class="bi bi-instagram" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                class="bi bi-twitter" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-dark font-weight-bold mb-3">About us</h5>
+                    <p class="mb-1">Plantilla</p>
+                    <p class="mb-0">Colecciones</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- En base.html, añade antes de los otros scripts -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

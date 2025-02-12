@@ -1,0 +1,45 @@
+:80 {
+    # Custom error handling - Prioridad para manejar errores 404
+    handle_errors {
+        root * /usr/share/caddy
+        rewrite * /404.html
+        file_server
+    }
+
+    # Sección para el build de React (Práctica 6)
+    handle_path /react/* {
+        reverse_proxy react:80
+        root * /usr/share/caddy
+        file_server
+    }
+
+    # Servir los archivos estáticos de la carpeta 'static'
+    handle_path /static/* {
+        root * /usr/share/caddy/static
+        file_server
+    }
+
+    handle_path /main-*.js {
+        reverse_proxy react:80
+    }
+
+    handle_path /main-*.css {
+        reverse_proxy react:80
+    }
+
+    # Directorio public
+    handle_path /public/* {
+        root * /usr/share/caddy
+        file_server
+    }
+
+    # App tienda
+    handle_path /tienda/* {
+        reverse_proxy tienda:8000
+    }
+
+    # Redirigir cualquier ruta que no sea estática a index.html para manejar rutas con React Router
+    handle {
+        try_files {path} /react/index.html
+    }
+}

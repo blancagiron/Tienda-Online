@@ -1,0 +1,41 @@
+services:
+  tienda:
+    build: .
+    depends_on:
+      - mongo
+      - caddy
+    restart: unless-stopped
+  
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile_React
+    depends_on:
+      - caddy
+    restart: unless-stopped
+    
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports: 
+      - 80:80
+      - 443:443
+    volumes:
+      - caddy-config:/config
+      - caddy-data:/data
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./content-public:/usr/share/caddy
+      - ./static:/usr/share/caddy/static  # Monta la carpeta 'static' en el contenedor
+    
+volumes:
+  caddy-config:
+  caddy-data:

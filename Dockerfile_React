@@ -1,0 +1,28 @@
+# Etapa de construcción
+FROM node:18-alpine AS build
+
+# directorio de trabajo
+WORKDIR /react
+
+# Copiar package.json y package-lock.json
+COPY ./react/package*.json ./
+
+# Instalar dependencias.
+RUN npm install 
+
+COPY ./react/ .
+
+
+RUN npm run build
+
+
+FROM nginx:alpine
+
+# Copiamos los archivos 
+COPY --from=build /react/build /usr/share/nginx/html
+
+# Exponer el puerto
+EXPOSE 80
+
+# Comando por defecto para ejecutar Nginx
+CMD ["nginx", "-g", "daemon off;"]

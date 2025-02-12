@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="jumbotron-custom-base">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/tienda/">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ producto.title }}</li>
+            </ol>
+        </nav>
+        <h1 class="display-4">Nuestros productos</h1>
+    </div>
+</div>
+
+<div class="container product-detail-container">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="product-image-container">
+                <img src="{{ producto.image }}" class="product-image" alt="imagen del producto">
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="product-info">
+                <h1 class="product-title">{{ producto.title }}</h1>
+
+                <div class="rating-container">
+                    <span class="stars" data-_id="{{producto.id}}">
+                        Aqui irá el rating de {{producto.id}}
+                    </span>
+                </div>
+
+                <div class="price-container">
+                    <span class="price">{{ producto.price | round(2) }}€</span>
+                </div>
+
+                <div class="description-container">
+                    <h3>Descripción</h3>
+                    <p>{{ producto.description }}</p>
+                </div>
+
+                <!-- Comprobamos el valor de admin -->
+                <!-- <p>Valor de admin: {{ admin }}</p> -->
+
+                <!-- {% if admin %}
+                <form action="/productos/editar/{{ producto.id }}" method="post" class="edit-product-form">
+                    <div class="form-group">
+                        <label for="title">Título</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ producto.title }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Precio</label>
+                        <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ producto.price }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </form>
+                {% else %}
+                <form action="/carrito/agregar/{{ producto.id }}" method="post" class="add-to-cart-form">
+                    <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                    <button type="submit" class="btn-add-to-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Añadir al carrito
+                    </button>
+                </form>
+                {% endif %} -->
+                {% if usuario and not admin %}
+                <form action="/tienda/carrito/agregar/{{ producto.id }}" method="post" class="add-to-cart-form">
+                    <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                    <button type="submit" class="btn-add-to-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Añadir al carrito
+                    </button>
+                </form>
+                {% endif %}
+
+                {% if admin %}
+                <form action="/tienda/productos/editar/{{ producto.id }}" method="post" class="edit-product-form">
+                    <div class="form-group">
+                        <label for="title">Título</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ producto.title }}"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Precio</label>
+                        <input type="number" step="0.01" class="form-control" id="price" name="price"
+                            value="{{ producto.price }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

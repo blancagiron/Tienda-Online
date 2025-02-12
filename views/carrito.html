@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="jumbotron-custom-base">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/tienda/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Carrito</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">Tu Carrito de Compra</h1>
+        </div>
+    </div>
+
+    <div class="container cart-container">
+        {% if carrito.length > 0 %}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-items">
+                    {% for producto in carrito %}
+                    <div class="cart-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <div class="item-image">
+                                    <img src="{{ producto.image }}" alt="{{ producto.title }}" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="item-details">
+                                    <h5 class="item-title">{{ producto.title }}</h5>
+                                    <div class="item-price">
+                                        <span class="price-label">Precio:</span>
+                                        <span class="price-amount">{{ producto.price | round(2) }} €</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="item-actions text-end">
+                                    <form action="/tienda/carrito/quitar/{{ producto.id }}" method="post">
+                                        <input type="hidden" name="producto_id" value="{{ producto._id }}">
+                                        <button type="submit" class="btn-remove">
+                                            <i class="bi bi-trash"></i>
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="cart-summary">
+                    <h3 class="summary-title">Resumen del Pedido</h3>
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span>{{ (precio_total | round(2)) }} €</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span>{{ (precio_total | round(2)) }} €</span>
+                            <span>Cantidad carrito {{cantidad_carrito}}</span>
+                        </div>
+                    </div>
+                    <button class="btn-checkout">
+                        Finalizar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <div class="empty-cart-content">
+                <div class="empty-cart-icon">
+                    <i class="bi bi-cart-x"></i>
+                </div>
+                <h2>Tu carrito está vacío</h2>
+                <p>¿No sabes qué comprar? ¡Miles de productos te esperan!</p>
+                <a href="/tienda/" class="btn-continue-shopping">
+                    Continuar Comprando
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

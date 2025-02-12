@@ -1,0 +1,77 @@
+<!-- Extendemos la base.html-->
+{% extends "base.html" %}
+
+<!-- Hacemos que la categoria que se muestre coincida con la seleccionada-->
+{% block content %}
+<div class="container-fluid">
+    <!--Hacemos un if para que se muestre un jumbotron distinto con cada categoria-->
+    {% if category == "electronics" %}
+    <div class="jumbotron-custom-base">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/tienda/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{category }}</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">Nuestra tecnología</h1>
+        </div>
+    </div>
+    {% elif category == "jewelery" %}
+    <div class="jumbotron-custom-base">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/tienda/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{category }}</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">Joyería</h1>
+        </div>
+    </div>
+    {% elif category == "men's clothing" %}
+    <div class="jumbotron-custom-base">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/tienda/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{category }}</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">Ropa masculina</h1>
+        </div>
+    </div>
+    {% elif category == "women's clothing" %}
+    <div class="jumbotron-custom-base">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/tienda/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{category }}</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">Descubre tu estilo perfecto</h1>
+        </div>
+    </div>
+    {% endif %}
+    <div class="container">
+        <div class="row">
+            {% for producto in productos %}
+            <div class="col-md-4 mb-4">
+                <div class="card product-card h-100">
+                    <div class="card-img-wrapper">
+                        <img src="{{ producto.image }}" class="card-img-top img-fluid" alt="imagen del producto"
+                            style="height: 350px; object-fit: auto;">
+
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between text-center">
+                        <h5 class="card-title">{{ producto.title }}</h5>
+                        <a href="/tienda/detalle_producto/{{ producto.id }}" class="btn-ver-producto mt-auto">Ver producto</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
